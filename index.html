@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="nl">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0119)file:///C:/Users/tjals499/AppData/Local/Microsoft/Windows/INetCache/Content.Outlook/XKK2U30U/CV%20Milena%20Tjalsma.html -->
+<html lang="nl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Stéphanie Tusveld — CV Intro</title>
+<title>Milena Tjalsma-Otten — CV Intro</title>
 
 <style>
 :root{
@@ -18,6 +18,7 @@ body{
     color:#111827;
     font-family: Inter,-apple-system,system-ui,sans-serif;
     padding:28px;
+    -webkit-font-smoothing:antialiased;
 }
 .container{
     max-width:900px;
@@ -33,7 +34,8 @@ header{
     display:flex;
     gap:18px;
     align-items:center;
-}
+
+}/* FOTO */
 .profile{
     width:75px;
     height:75px;
@@ -50,11 +52,13 @@ header{
     font-size:14px;
     color:var(--muted);
     margin-top:4px;
+    max-width:520px;
 }
 .actions{
     margin-left:auto;
     display:flex;
     gap:8px;
+    align-items:center;
 }
 .btn{
     border:none;
@@ -66,17 +70,18 @@ header{
 }
 .btn-lang{
     background:#e5e7eb;
+    color:#374151;
 }
 .btn-lang.active{
     background:var(--accent);
-    color:#fff;
+    color:#ffffff;
 }
 .btn-start{
     background:var(--accent);
-    color:#fff;
+    color:#ffffff;
 }
 
-/* Intro */
+/* Typing area */
 .typed-text{
     display:none;
     margin-top:26px;
@@ -84,108 +89,138 @@ header{
     font-family:'Courier New', monospace;
     font-size:17px;
     line-height:1.55;
+    color:#0f172a;
 }
 
-/* Sections */
+/* Sections (opleidingen & werkervaring) */
 .info-section{
     margin-top:30px;
     opacity:0;
     transform:translateX(40px);
+    pointer-events:none;
 }
 .info-section.visible{
     opacity:1;
     transform:translateX(0);
-    transition:.6s;
+    pointer-events:auto;
+    transition:opacity .6s ease-out, transform .6s ease-out;
 }
-
+.info-section h2{
+    margin:0 0 10px;
+    font-size:18px;
+    color:#111827;
+}
 .edu-item{
-    margin-bottom:6px;
+    font-size:15px;
+    margin-bottom:4px;
 }
 
+/* Experience cards */
 .exp-card{
     opacity:0;
     transform:translateX(40px);
     background:#f1f5f9;
     border-radius:10px;
-    padding:12px;
+    padding:12px 14px;
     margin-bottom:10px;
+    box-shadow:0 3px 10px rgba(15,23,42,0.08);
 }
 .exp-card.visible{
     opacity:1;
     transform:translateX(0);
-    transition:.6s;
+    transition:opacity .6s ease-out, transform .6s ease-out;
 }
 .exp-period{
     font-size:13px;
-    color:#6b7280;
     font-weight:600;
+    color:var(--muted);
 }
 .exp-title{
+    font-size:15px;
     font-weight:700;
+    margin-top:2px;
 }
 .exp-company{
+    font-size:14px;
     color:#374151;
+    margin-bottom:4px;
 }
 .exp-desc{
     font-size:14px;
+    color:#111827;
 }
 
-#conversationBlock, #contactInfo{
+/* JA/NEE + contact */
+#conversationBlock{
     display:none;
-    margin-top:24px;
+    margin-top:32px;
+    font-size:18px;
 }
 #contactInfo{
-    background:#eef2f6;
+    display:none;
+    margin-top:18px;
     padding:18px;
+    background:#eef2f6;
     border-radius:8px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.10);
+    font-size:16px;
 }
 </style>
 </head>
-
 <body>
-<div class="container">
+<div class="container" role="main">
 
-<header>
-    <!-- Vervang foto indien gewenst -->
-    <img src="https://via.placeholder.com/150" class="profile">
+    <header>
 
-    <div>
-        <div class="title">Stéphanie Tusveld</div>
-        <div class="subtitle">
-            HR Adviseur · Data-driven HR · Inhuur & Verzuim · Power BI · AI & Digitalisering
+        <img src="https://github.com/MilenaTjalsma/Image-CV/blob/main/Milena5.png?raw=true" class="profile">
+
+        <div>
+            <div class="title">Milena Tjalsma-Otten</div>
+            <div class="subtitle">
+                Recruiter · Talent Acquisition · Cyber Security &amp; Tech · Niche recruitment · Leadership · Entrepreneurship
+            </div>
         </div>
+
+        <div class="actions">
+            <button id="btnNL" class="btn btn-lang active">NL</button>
+            <button id="btnEN" class="btn btn-lang">EN</button>
+            <button id="startBtn" class="btn btn-start">Start intro</button>
+        </div>
+    </header>
+
+    <!-- Typend intro -->
+    <div id="typedText" class="typed-text"></div>
+
+
+    <!-- Werkervaring per bedrijf -->
+    <section id="experienceSection" class="info-section">
+        <h2 id="expTitle"></h2>
+        <div id="experienceList"></div>
+    </section>
+
+     <!-- Opleidingen blok -->
+    <section id="educationSection" class="info-section">
+        <h2 id="eduTitle"></h2>
+        <div id="educationContent"></div>
+    </section>
+
+    <!-- JA / NEE contactvraag -->
+    <div id="conversationBlock">
+        <strong>Wil je met mij in gesprek?</strong><br><br>
+        <button id="yesBtn" class="btn btn-start">Ja</button>
+        <button id="noBtn" class="btn" style="background:#ffffff;border:1px solid #d1d5db;">Nee</button>
     </div>
 
-    <div class="actions">
-        <button id="btnNL" class="btn btn-lang active">NL</button>
-        <button id="btnEN" class="btn btn-lang">EN</button>
-        <button id="startBtn" class="btn btn-start">Start intro</button>
-    </div>
-</header>
-
-<div id="typedText" class="typed-text"></div>
-
-<section id="experienceSection" class="info-section">
-    <h2 id="expTitle"></h2>
-    <div id="experienceList"></div>
-</section>
-
-<section id="educationSection" class="info-section">
-    <h2 id="eduTitle"></h2>
-    <div id="educationContent"></div>
-</section>
-
-<div id="conversationBlock"></div>
-
-<div id="contactInfo">
+    <!-- Contactgegevens -->
+    <div id="contactInfo">
     <strong>Contactgegevens</strong><br><br>
     📍 Almelo<br>
     📞 06-17147676<br>
     📧 <a href="mailto:stephaniet86@hotmail.com">stephaniet86@hotmail.com</a><br>
     🔗 <a href="https://www.linkedin.com/in/stephanietusveld/" target="_blank">LinkedIn</a>
-</div>
+    </div>
 
-</div>
+</div><!-- /container -->
 
 <script>
 let currentLanguage = "nl";
@@ -235,6 +270,7 @@ const experienceEN = [
     company:"KPN",
     desc:"Managing and coaching a team of 25 employees focused on customer satisfaction, productivity, recruitment and HR performance."
 }
+
 ];
 
 // EDUCATION
@@ -255,76 +291,197 @@ const educationEN = [
 "Small Business & Retail Management – INHolland"
 ];
 
-// ELEMENTS
-const elText = document.getElementById("typedText");
-const expCon = document.getElementById("experienceList");
-const eduCon = document.getElementById("educationContent");
-const startBtn = document.getElementById("startBtn");
+// Elementen
+const typedText          = document.getElementById("typedText");
+const startBtn           = document.getElementById("startBtn");
+const btnNL              = document.getElementById("btnNL");
+const btnEN              = document.getElementById("btnEN");
+const educationSection   = document.getElementById("educationSection");
+const educationContent   = document.getElementById("educationContent");
+const experienceSection  = document.getElementById("experienceSection");
+const experienceList     = document.getElementById("experienceList");
+const conversationBlock  = document.getElementById("conversationBlock");
+const contactInfo        = document.getElementById("contactInfo");
+const yesBtn             = document.getElementById("yesBtn");
+const noBtn              = document.getElementById("noBtn");
 
-startBtn.onclick = () => startIntro();
+// Taal-knoppen
+btnNL.addEventListener("click", () => {
+    currentLanguage = "nl";
+    btnNL.classList.add("active");
+    btnEN.classList.remove("active");
+});
+btnEN.addEventListener("click", () => {
+    currentLanguage = "en";
+    btnEN.classList.add("active");
+    btnNL.classList.remove("active");
+});
 
-function startIntro(){
-    elText.style.display="block";
-    elText.innerHTML="";
-    expCon.innerHTML="";
-    eduCon.innerHTML="";
+// Start intro
+startBtn.addEventListener("click", () => {
+    // reset
+    typedText.style.display = "block";
+    typedText.innerHTML = "";
+    educationContent.innerHTML = "";
+    experienceList.innerHTML = "";
+    educationSection.classList.remove("visible");
+    experienceSection.classList.remove("visible");
+    conversationBlock.style.display = "none";
+    contactInfo.style.display = "none";
+    noBtn.style.opacity = 1;
+    noBtn.style.transform = "none";
+    noBtn.style.pointerEvents = "auto";
 
-    const text = currentLanguage==="nl"?introNL:introEN;
-    let i=0, buf="";
+    startTyping();
+});
 
-    const loop=setInterval(()=>{
-        buf+=text[i];
-        elText.innerHTML=buf;
+function startTyping(){
+    const fullText = currentLanguage === "nl" ? introNL : introEN;
+
+    let i   = 0;
+    let buf = "";
+    let tag = false;
+
+    const loop = setInterval(() => {
+        const ch = fullText[i];
+
+        if (ch === "<") tag = true;
+        if (ch === ">") tag = false;
+
+        buf += ch;
+        typedText.innerHTML = buf;
+
         i++;
-        if(i>=text.length){
+        if (i >= fullText.length){
             clearInterval(loop);
-            showInfo();
+            showEducationAndExperience();
         }
-    },40);
+    }, 40);
 }
 
-function showInfo(){
-document.getElementById("eduTitle").innerText = currentLanguage==="nl"?"Opleidingen":"Education";
-document.getElementById("expTitle").innerText = currentLanguage==="nl"?"Werkervaring":"Experience";
+function showEducationAndExperience(){
+    // Set correct titles based on language
+document.getElementById("eduTitle").innerHTML =
+    currentLanguage === "nl" ? "Opleiding" : "Education";
 
-( currentLanguage==="nl"?educationNL:educationEN ).forEach(e=>{
-    const d=document.createElement("div");
-    d.className="edu-item";
-    d.innerText="• "+e;
-    eduCon.appendChild(d);
+document.getElementById("expTitle").innerHTML =
+    currentLanguage === "nl" ? "Werkervaring" : "Work Experience";
+
+    const eduItems = currentLanguage === "nl" ? educationNL : educationEN;
+    const expItems = currentLanguage === "nl" ? experienceNL : experienceEN;
+
+    // Opleidingen vullen
+    eduItems.forEach(line => {
+        const div = document.createElement("div");
+        div.className = "edu-item";
+        div.innerHTML = "• " + line;
+        educationContent.appendChild(div);
+    });
+    educationSection.classList.add("visible");
+
+    // Werkervaring kaarten opbouwen
+    expItems.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "exp-card";
+        card.innerHTML =
+            "<div class='exp-period'>" + item.period + "</div>" +
+            "<div class='exp-title'>" + item.title + "</div>" +
+            "<div class='exp-company'>" + item.company + "</div>" +
+            "<div class='exp-desc'>" + item.desc + "</div>";
+        experienceList.appendChild(card);
+    });
+    experienceSection.classList.add("visible");
+
+    // Kaarten één voor één laten inschuiven
+    const cards = document.querySelectorAll(".exp-card");
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add("visible");
+        }, 400 + index * 350);
+    });
+
+   // Na laatste kaart: JA/NEE tonen
+const totalDelay = 400 + cards.length * 350 + 300;
+setTimeout(() => {
+
+    // Toon JA/NEE in juiste taal
+    if (currentLanguage === "nl") {
+        conversationBlock.innerHTML = `
+            Wil je met mij in gesprek?<br><br>
+            <button id="yesBtnDyn" class="btn btn-start">Ja</button>
+            <button id="noBtnDyn" class="btn" style="background:#fff;border:1px solid #ccc">Nee</button>
+        `;
+    } else {
+        conversationBlock.innerHTML = `
+            Would you like to talk to me?<br><br>
+            <button id="yesBtnDyn" class="btn btn-start">Yes</button>
+            <button id="noBtnDyn" class="btn" style="background:#fff;border:1px solid #ccc">No</button>
+        `;
+    }
+
+    conversationBlock.style.display = "block";
+
+    // knoppen opnieuw koppelen
+    const yesBtnDyn = document.getElementById("yesBtnDyn");
+    const noBtnDyn  = document.getElementById("noBtnDyn");
+
+    yesBtnDyn.addEventListener("click", () => {
+        contactInfo.style.display = "block";
+        document.getElementById("downloadCV").style.display = "inline-block";
+        launchClover();
+    });
+
+    noBtnDyn.addEventListener("mouseover", () => {
+        noBtnDyn.style.opacity = 0;
+        noBtnDyn.style.transform = "scale(.4) rotate(10deg)";
+        noBtnDyn.style.pointerEvents = "none";
+    });
+
+}, totalDelay);
+
+}
+
+// JA → contact tonen + confetti + scroll
+yesBtn.addEventListener("click", () => {
+    contactInfo.style.display = "block";
+    launchConfetti();
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 });
-document.getElementById("educationSection").classList.add("visible");
 
-( currentLanguage==="nl"?experienceNL:experienceEN ).forEach((e,i)=>{
-    const c=document.createElement("div");
-    c.className="exp-card";
-    c.innerHTML=`<div class="exp-period">${e.period}</div>
-                 <div class="exp-title">${e.title}</div>
-                 <div class="exp-company">${e.company}</div>
-                 <div class="exp-desc">${e.desc}</div>`;
-    expCon.appendChild(c);
-    setTimeout(()=>c.classList.add("visible"),400+i*300);
+// NEE → vlucht weg bij hover
+noBtn.addEventListener("mouseover", function(){
+    this.style.opacity = 0;
+    this.style.transform = "scale(.3) rotate(18deg)";
+    this.style.pointerEvents = "none";
+    this.style.transition = ".25s";
 });
-document.getElementById("experienceSection").classList.add("visible");
 
-setTimeout(()=>{
-    document.getElementById("conversationBlock").innerHTML=`
-    <strong>${currentLanguage==="nl"?"Wil je met mij in gesprek?":"Would you like to connect?"}</strong><br><br>
-    <button class="btn btn-start" onclick="document.getElementById('contactInfo').style.display='block'">
-    ${currentLanguage==="nl"?"Ja":"Yes"}</button>`;
-    document.getElementById("conversationBlock").style.display="block";
-},1400);
+// Confetti animatie
+function launchConfetti(){
+    for(let i = 0; i < 40; i++){
+        const el = document.createElement("div");
+        el.innerHTML = "🍀";
+        el.style.position = "fixed";
+        el.style.top = (Math.random() * 90) + "vh";
+        el.style.left = "-80px";
+        el.style.fontSize = "40px"; /* GROTER */
+        el.style.zIndex = 99999;
+        el.style.opacity = 1;
+        el.style.transition = "transform 3s ease-out, opacity 3s ease-out";
+        document.body.appendChild(el);
+
+        setTimeout(() => {
+            el.style.transform = `translateX(${window.innerWidth + 200}px) rotate(${Math.random()*360}deg)`;
+            el.style.opacity = 0;
+        }, 50);
+
+        setTimeout(() => el.remove(), 3000);
+    }
 }
 
-btnNL.onclick=()=>switchLang("nl");
-btnEN.onclick=()=>switchLang("en");
-
-function switchLang(l){
-currentLanguage=l;
-btnNL.classList.toggle("active",l==="nl");
-btnEN.classList.toggle("active",l==="en");
-}
+    
 </script>
 
-</body>
-</html>
+
+
+</body></html>
