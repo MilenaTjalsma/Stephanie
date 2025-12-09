@@ -163,4 +163,168 @@ header{
     </div>
 </header>
 
-<div id="typedText" class="typ
+<div id="typedText" class="typed-text"></div>
+
+<section id="experienceSection" class="info-section">
+    <h2 id="expTitle"></h2>
+    <div id="experienceList"></div>
+</section>
+
+<section id="educationSection" class="info-section">
+    <h2 id="eduTitle"></h2>
+    <div id="educationContent"></div>
+</section>
+
+<div id="conversationBlock"></div>
+
+<div id="contactInfo">
+    <strong>Contactgegevens</strong><br><br>
+    📍 Almelo<br>
+    📞 06-17147676<br>
+    📧 <a href="mailto:stephaniet86@hotmail.com">stephaniet86@hotmail.com</a><br>
+    🔗 <a href="https://www.linkedin.com/in/stephanietusveld/" target="_blank">LinkedIn</a>
+</div>
+
+</div>
+
+<script>
+let currentLanguage = "nl";
+
+// INTRO
+const introNL =
+"Welkom!\n\n" +
+"Mijn naam is Stéphanie Tusveld.\n\n" +
+"<strong>Datagedreven HR-adviseur</strong> met brede ervaring in werving & selectie, verzuim, personeelsadvies en teamontwikkeling.\n" +
+"Mijn kracht ligt in het verbinden van mensen en cijfers.\n" +
+"Met Power BI, Excel en AI maak ik HR-data inzichtelijk zodat advies altijd gebaseerd is op feiten.\n\n" +
+"Ik werk met enthousiasme aan digitalisering en procesoptimalisatie en zet mij in voor mensgerichte én resultaatgedreven HR.";
+
+const introEN =
+"Welcome!\n\n" +
+"My name is Stéphanie Tusveld.\n\n" +
+"<strong>Data-driven HR Advisor</strong> with extensive experience in recruitment, absenteeism management, people development and HR analytics.\n" +
+"I combine a strong focus on people with evidence-based decision making using Power BI, Excel and AI tools.\n\n" +
+"Driven by innovation, I continuously improve HR processes to make them more efficient, transparent and human-centered.";
+
+// EXPERIENCE
+const experienceNL = [
+{
+    period:"2020 – heden",
+    title:"HR Adviseur Inhuur Uitzendpersoneel",
+    company:"KPN",
+    desc:"Verbinding tussen stakeholders voor efficiënte inhuur, verzuim en doorstroom. Opstellen van data-analyses in Power BI, advies op basis van HR-data en projectleiding rond automatisering en AI-toepassingen."
+},
+{
+    period:"2015 – 2019",
+    title:"Team Manager Customer Service",
+    company:"KPN",
+    desc:"Leidinggeven aan een team van 25 medewerkers. Focus op klanttevredenheid, kwaliteit, productiviteit, HR-begeleiding, werving en verzuimmanagement."
+}
+];
+
+const experienceEN = [
+{
+    period:"2020 – present",
+    title:"HR Advisor – Contingent Workforce",
+    company:"KPN",
+    desc:"Stakeholder management for hiring, absenteeism and retention. Developing Power BI HR dashboards, providing data-driven advice and leading automation and AI optimisation projects."
+},
+{
+    period:"2015 – 2019",
+    title:"Team Manager Customer Service",
+    company:"KPN",
+    desc:"Managing and coaching a team of 25 employees focused on customer satisfaction, productivity, recruitment and HR performance."
+}
+];
+
+// EDUCATION
+const educationNL = [
+"2025 – Microsoft 365 Copilot • Vijfhart",
+"2025 – Microsoft Power BI Data Analyst (PL-300)",
+"2024 – Excel Gevorderd",
+"2024 – Power BI Gevorderd",
+"2016 – Bachelor Psychologie • Open Universiteit",
+"2007 – Small Business & Retail Management • INHolland"
+];
+
+const educationEN = [
+"2025 – Microsoft 365 Copilot",
+"2025 – Microsoft Power BI Data Analyst (PL-300)",
+"Advanced Excel & Power BI",
+"Bachelor Psychology – Open University",
+"Small Business & Retail Management – INHolland"
+];
+
+// ELEMENTS
+const elText = document.getElementById("typedText");
+const expCon = document.getElementById("experienceList");
+const eduCon = document.getElementById("educationContent");
+const startBtn = document.getElementById("startBtn");
+
+startBtn.onclick = () => startIntro();
+
+function startIntro(){
+    elText.style.display="block";
+    elText.innerHTML="";
+    expCon.innerHTML="";
+    eduCon.innerHTML="";
+
+    const text = currentLanguage==="nl"?introNL:introEN;
+    let i=0, buf="";
+
+    const loop=setInterval(()=>{
+        buf+=text[i];
+        elText.innerHTML=buf;
+        i++;
+        if(i>=text.length){
+            clearInterval(loop);
+            showInfo();
+        }
+    },40);
+}
+
+function showInfo(){
+document.getElementById("eduTitle").innerText = currentLanguage==="nl"?"Opleidingen":"Education";
+document.getElementById("expTitle").innerText = currentLanguage==="nl"?"Werkervaring":"Experience";
+
+( currentLanguage==="nl"?educationNL:educationEN ).forEach(e=>{
+    const d=document.createElement("div");
+    d.className="edu-item";
+    d.innerText="• "+e;
+    eduCon.appendChild(d);
+});
+document.getElementById("educationSection").classList.add("visible");
+
+( currentLanguage==="nl"?experienceNL:experienceEN ).forEach((e,i)=>{
+    const c=document.createElement("div");
+    c.className="exp-card";
+    c.innerHTML=`<div class="exp-period">${e.period}</div>
+                 <div class="exp-title">${e.title}</div>
+                 <div class="exp-company">${e.company}</div>
+                 <div class="exp-desc">${e.desc}</div>`;
+    expCon.appendChild(c);
+    setTimeout(()=>c.classList.add("visible"),400+i*300);
+});
+document.getElementById("experienceSection").classList.add("visible");
+
+setTimeout(()=>{
+    document.getElementById("conversationBlock").innerHTML=`
+    <strong>${currentLanguage==="nl"?"Wil je met mij in gesprek?":"Would you like to connect?"}</strong><br><br>
+    <button class="btn btn-start" onclick="document.getElementById('contactInfo').style.display='block'">
+    ${currentLanguage==="nl"?"Ja":"Yes"}</button>`;
+    document.getElementById("conversationBlock").style.display="block";
+},1400);
+}
+
+btnNL.onclick=()=>switchLang("nl");
+btnEN.onclick=()=>switchLang("en");
+
+function switchLang(l){
+currentLanguage=l;
+btnNL.classList.toggle("active",l==="nl");
+btnEN.classList.toggle("active",l==="en");
+}
+</script>
+
+</body>
+</html>
